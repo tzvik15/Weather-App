@@ -12,16 +12,25 @@
     <link rel = "stylesheet" href="style.css">
   </head>
   <body>
-        <div class="card" style="width: 18rem; background-color:rgb(179, 184, 187)">
+        <div class="card" style="float:left;width: 18rem; background-color:rgb(179, 184, 187)">
                 <div class="card-body">
                   Enter city name
                 </div>
                 <div class="form-group">
-                    <input  class="form-control" placeholder="Type location here">
+                    <input  class="form-control"  placeholder="Type location here">
+                    <button type="button" class="btn btn-outline-info" style="width:30%; margin-left:200px; margin-top: -67px;" id="submit">Submit</button>
                 </div>
                 <div id="pastLocations"></div>
               </div>
+        <div id="infoDisplay" style="float:left; border-style:solid; border-width:1px; border-color:gainsboro;">
+          <h4 class="info" id="cityName">City Name:</h4>
+          <h5 class="info" id="todayDate">Date:</h4>
+          <h5 class="info" id="currentTemp">Current Temp:</h4>
+          <h5 class="info" id="humid">Humidity:</h4>
+          <h5 class="info" id="wind">Wind Speed:</h4>
+          <h5 class="info" id="uv">UV Index:</h5>
 
+        </div>      
 
 
 
@@ -36,6 +45,7 @@
       integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
