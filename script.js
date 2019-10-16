@@ -2,6 +2,7 @@
 var pastSearches = [];
 var storageSpot = ["One", "Two", "Three", "Four", "Five"];
 var manualIterator = 0;
+var cityID = "";
 
 //possibly (bonus, if time) a function that retrieves the user's location and displays weather for it
 var bonus = function () {}
@@ -36,6 +37,7 @@ var send = function() {
     var lat ="";
     var lon = "";
     var uvUrl=";"
+    
 $.ajax({
     url: queryUrl,
     method: "GET"
@@ -54,6 +56,7 @@ $.ajax({
     $("#todayDate").append(date);
      lat = response.coord.lat;
      lon = response.coord.lon;
+     cityID = response.id;
     uvUrl = "http://api.openweathermap.org/data/2.5/uvi?appid="+apiKey +"&lat=" + lat+ "&lon="+lon;
      }).then(function() {
 $.ajax({
@@ -63,8 +66,72 @@ $.ajax({
     var actualUv = response.value;
     $("#uv").text("UV Index: " + "");
     $("#uv").append(actualUv);
+    var thirdUrl = "http://api.openweathermap.org/data/2.5/forecast?appid=" +apiKey +"&id=" + cityID +"&units=imperial";
+        $.ajax({
+            url: thirdUrl,
+            method: "GET"
+        }).then(function(response){
+            
+            $("#textOne").html("Date: " + moment().add(1, 'd').format("MMM Do YYYY") + "<br/>  Temp at noon: " + response.list['5'].main.temp + "<br/> Humidity at noon: "+ response.list['5'].main.humidity);
+            if (response.list['5'].weather['0'].main == "Clouds") {
+                $("#imageOne").attr("src", "https://3yecy51kdipx3blyi37oute1-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/bg-clouds.jpg")
+            } else if (response.list['5'].weather['0'].main == "Clear") {
+                $("#imageOne").attr("src","https://anarkeden.com/wp-content/uploads/2018/10/blue-clear-sky-hd-static-video-nature-background_bteol5rrj_thumbnail-full01.png") 
+            } else if (response.list['5'].weather['0'].main == "Snow") {
+                $("#imageOne").attr("src","https://wordpress.accuweather.com/wp-content/uploads/2019/02/snow-in-pinehurst-seattle-washington-2-9-19.31.5620AM.png")
+            } else if (response.list['5'].weather['0'].main == "Rain") {
+                $("#imageOne").attr("src", "https://i.ytimg.com/vi/J5OSRpRyl6g/maxresdefault.jpg") 
+            }
+
+            $("#textTwo").html("Date: " + moment().add(2, 'd').format("MMM Do YYYY") + "<br/>  Temp at noon: " + response.list['13'].main.temp + "<br/> Humidity at noon: "+ response.list['13'].main.humidity);
+            if (response.list['13'].weather['0'].main == "Clouds") {
+                $("#imageTwo").attr("src", "https://3yecy51kdipx3blyi37oute1-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/bg-clouds.jpg")
+            } else if (response.list['13'].weather['0'].main == "Clear") {
+                $("#imageTwo").attr("src","https://anarkeden.com/wp-content/uploads/2018/10/blue-clear-sky-hd-static-video-nature-background_bteol5rrj_thumbnail-full01.png") 
+            } else if (response.list['13'].weather['0'].main == "Snow") {
+                $("#imageTwo").attr("src","https://wordpress.accuweather.com/wp-content/uploads/2019/02/snow-in-pinehurst-seattle-washington-2-9-19.31.5620AM.png")
+            } else if (response.list['13'].weather['0'].main == "Rain") {
+                $("#imageTwo").attr("src", "https://i.ytimg.com/vi/J5OSRpRyl6g/maxresdefault.jpg") 
+            }
+
+            $("#textThree").html("Date: " + moment().add(3, 'd').format("MMM Do YYYY")+ "<br/>  Temp at noon: " + response.list['21'].main.temp + "<br/> Humidity at noon: "+ response.list['21'].main.humidity);
+            if (response.list['21'].weather['0'].main == "Clouds") {
+                $("#imageThree").attr("src", "https://3yecy51kdipx3blyi37oute1-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/bg-clouds.jpg")
+            } else if (response.list['21'].weather['0'].main == "Clear") {
+                $("#imageThree").attr("src","https://anarkeden.com/wp-content/uploads/2018/10/blue-clear-sky-hd-static-video-nature-background_bteol5rrj_thumbnail-full01.png") 
+            } else if (response.list['21'].weather['0'].main == "Snow") {
+                $("#imageThree").attr("src","https://wordpress.accuweather.com/wp-content/uploads/2019/02/snow-in-pinehurst-seattle-washington-2-9-19.31.5620AM.png")
+            } else if (response.list['21'].weather['0'].main == "Rain") {
+                $("#imageThree").attr("src", "https://i.ytimg.com/vi/J5OSRpRyl6g/maxresdefault.jpg") 
+            }
+
+            $("#textFour").html("Date: " + moment().add(4, 'd').format("MMM Do YYYY")+ "<br/>  Temp at noon: " + response.list['29'].main.temp + "<br/> Humidity at noon: "+ response.list['29'].main.humidity);
+            if (response.list['29'].weather['0'].main == "Clouds") {
+                $("#imageFour").attr("src", "https://3yecy51kdipx3blyi37oute1-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/bg-clouds.jpg")
+            } else if (response.list['29'].weather['0'].main == "Clear") {
+                $("#imageFour").attr("src","https://anarkeden.com/wp-content/uploads/2018/10/blue-clear-sky-hd-static-video-nature-background_bteol5rrj_thumbnail-full01.png") 
+            } else if (response.list['29'].weather['0'].main == "Snow") {
+                $("#imageFour").attr("src","https://wordpress.accuweather.com/wp-content/uploads/2019/02/snow-in-pinehurst-seattle-washington-2-9-19.31.5620AM.png")
+            } else if (response.list['29'].weather['0'].main == "Rain") {
+                $("#imageFour").attr("src", "https://i.ytimg.com/vi/J5OSRpRyl6g/maxresdefault.jpg") 
+            }
+
+            $("#textFive").html("Date: " + moment().add(5, 'd').format("MMM Do YYYY")+ "<br/>  Temp at noon: " + response.list['37'].main.temp + "<br/> Humidity at noon: "+ response.list['37'].main.humidity);
+            if (response.list['37'].weather['0'].main == "Clouds") {
+                $("#imageFive").attr("src", "https://3yecy51kdipx3blyi37oute1-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/bg-clouds.jpg")
+            } else if (response.list['37'].weather['0'].main == "Clear") {
+                $("#imageFive").attr("src","https://anarkeden.com/wp-content/uploads/2018/10/blue-clear-sky-hd-static-video-nature-background_bteol5rrj_thumbnail-full01.png") 
+            } else if (response.list['37'].weather['0'].main == "Snow") {
+                $("#imageFive").attr("src","https://wordpress.accuweather.com/wp-content/uploads/2019/02/snow-in-pinehurst-seattle-washington-2-9-19.31.5620AM.png")
+            } else if (response.list['37'].weather['0'].main == "Rain") {
+                $("#imageFive").attr("src", "https://i.ytimg.com/vi/J5OSRpRyl6g/maxresdefault.jpg") 
+            }
+        })
+    })
+
 })
-    })}
+
+}
 
 
 //a promise function (.then) that parses through the object received from the API (possibly storing it as a variable first), and dynamically adds the resaults to the page, specifically the name, date, temperature, humidity, UV index, wind speed, and an image depicting current weather
@@ -75,3 +142,5 @@ var pastSearch = function() {}
 
 //a function that collects future forcast information from the retrieved object (this possibly will also need to by a promisory function, TBD), and dynamically displays a weather image with the following information: date, temperature, humidity
 var future = function() {}
+
+//localStorage.clear();
