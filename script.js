@@ -2,6 +2,7 @@
 var pastSearches = [];
 var storageSpot = ["One", "Two", "Three", "Four", "Five"];
 var manualIterator = 0;
+var manualIterator2 = 0;
 var cityID = "";
 
 //possibly (bonus, if time) a function that retrieves the user's location and displays weather for it
@@ -14,9 +15,15 @@ $("#cityName").text("City Name: " + "");
 $("#cityName").append($(".form-control").val());
 if (pastSearches.indexOf($(".form-control").val()) === -1 ) {
     pastSearches.push($(".form-control").val());
+    var newBtn = $("<button>");
+    newBtn.text(pastSearches[manualIterator2]);
+    manualIterator2++;
+    $("#pastLocations").append(newBtn);
 }
 store();
 send();
+//pastSearch();
+
 })
 //a function that stores the inputes city name as a localStorage item, up to 5 items. If more than 5 searches are used, will start replacing them in order
 var store = function() {
@@ -134,13 +141,9 @@ $.ajax({
 }
 
 
-//a promise function (.then) that parses through the object received from the API (possibly storing it as a variable first), and dynamically adds the resaults to the page, specifically the name, date, temperature, humidity, UV index, wind speed, and an image depicting current weather
-var diplayInfo = function() {}
+//an event listener on the newbuttons area that triggers a new weather search
 
-//a function that retrieves the location names stored in localStorage and appends them to the display. This will include adding an "on click" event listener to any new buttons appended this way
-var pastSearch = function() {}
+//a for loop that loops through local storage cells on page load and appends buttons form those searches. Must also update pastSearches array.
 
-//a function that collects future forcast information from the retrieved object (this possibly will also need to by a promisory function, TBD), and dynamically displays a weather image with the following information: date, temperature, humidity
-var future = function() {}
 
 //localStorage.clear();
