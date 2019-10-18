@@ -4,6 +4,8 @@ var storageSpot = ["One", "Two", "Three", "Four", "Five"];
 var manualIterator = 0;
 var manualIterator2 = 0;
 var cityID = "";
+var queryUrl = "";
+var apiKey = "f1d3e368452da1cefaeccae21f2b42e2";
 
 //possibly (bonus, if time) a function that retrieves the user's location and displays weather for it
 var bonus = function () {}
@@ -20,9 +22,10 @@ if (pastSearches.indexOf($(".form-control").val()) === -1 ) {
     manualIterator2++;
     $("#pastLocations").append(newBtn);
 }
+queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + $(".form-control").val() + "&appid="+apiKey;
 store();
 send();
-//pastSearch();
+
 
 })
 //a function that stores the inputes city name as a localStorage item, up to 5 items. If more than 5 searches are used, will start replacing them in order
@@ -39,8 +42,8 @@ var store = function() {
 
 //a function that sends an AJAX request to the weatherApi, with the stored data variable as the location (the variables for this search will be defined in the click event)
 var send = function() {
-    var apiKey = "f1d3e368452da1cefaeccae21f2b42e2";
-    var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + $(".form-control").val() + "&appid="+apiKey;
+    
+ //   queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + $(".form-control").val() + "&appid="+apiKey;
     var lat ="";
     var lon = "";
     var uvUrl=";"
@@ -142,8 +145,32 @@ $.ajax({
 
 
 //an event listener on the newbuttons area that triggers a new weather search
+$("#pastLocations").on("click", function() {
+    queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + event.target.innerText + "&appid="+apiKey;
+    send();
+})
+
+
+
 
 //a for loop that loops through local storage cells on page load and appends buttons form those searches. Must also update pastSearches array.
+var launch = function() {
+    for (var i=0; i<localStorage.length; i++){
+        if (pastSearches.indexOf(localStorage.getItem(localStorage.key(i))) === -1 ) {
+        pastSearches.push(localStorage.getItem(localStorage.key(i)))
+        }
+    }
+
+    for (var j = 0; j<pastSearches.length; j++){
+        var pastBtn = $("<button>");
+        pastBtn.text(pastSearches[j]);
+        $("#pastLocations").append(pastBtn);
+        manualIterator2 = pastSearches.length;
+    }
+}
 
 
-//localStorage.clear();
+localStorage.clear();
+
+//calling the launch function on page load to display past searches
+launch()
