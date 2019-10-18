@@ -1,0 +1,28 @@
+.futureCard{
+    width: 11rem;
+    background-color: rgb(182, 221, 243)
+}
+#currentDay{
+    width: 18rem;
+}
+#infoDisplay{
+    background-color: rgb(202, 230, 245);
+}
+@media screen and (min-width:769px) and (max-width:1200px){
+    #infoDisplay{
+        width:26rem;
+    }
+}
+@media screen and (min-width:641px) and (max-width:768px){
+    #infoDisplay{
+        width:20rem;
+    }
+}
+@media screen and (max-width:640px){
+    .futureCard{
+        width:20rem;
+    }
+    #infoDisplay{
+        width:20rem;
+    }
+}

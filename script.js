@@ -7,9 +7,6 @@ var cityID = "";
 var queryUrl = "";
 var apiKey = "f1d3e368452da1cefaeccae21f2b42e2";
 
-//possibly (bonus, if time) a function that retrieves the user's location and displays weather for it
-var bonus = function () {}
-
 //a click event that ties to the submit button and launches several functions 
 $("#submit").on("click", function(event) {
 event.preventDefault();
@@ -19,41 +16,38 @@ if (pastSearches.indexOf($(".form-control").val()) === -1 ) {
     pastSearches.push($(".form-control").val());
     var newBtn = $("<button>");
     newBtn.text(pastSearches[manualIterator2]);
+    newBtn.attr("class", "btn-success");
     manualIterator2++;
     $("#pastLocations").append(newBtn);
 }
 queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + $(".form-control").val() + "&appid="+apiKey;
 store();
 send();
-
-
 })
+
 //a function that stores the inputes city name as a localStorage item, up to 5 items. If more than 5 searches are used, will start replacing them in order
 var store = function() {
-   if (manualIterator<5) {
-       localStorage['place' +storageSpot[manualIterator]] = $(".form-control").val();
-       manualIterator++;
-   } else {
-       manualIterator = 0;
-       localStorage['place' +storageSpot[manualIterator]] = $(".form-control").val();
-       manualIterator++;
-   }
+if (manualIterator<5) {
+    localStorage['place' +storageSpot[manualIterator]] = $(".form-control").val();
+    manualIterator++;
+} else {
+    manualIterator = 0;
+    localStorage['place' +storageSpot[manualIterator]] = $(".form-control").val();
+    manualIterator++;
+}
 }
 
 //a function that sends an AJAX request to the weatherApi, with the stored data variable as the location (the variables for this search will be defined in the click event)
 var send = function() {
-    
- //   queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + $(".form-control").val() + "&appid="+apiKey;
     var lat ="";
     var lon = "";
     var uvUrl=";"
-    
 $.ajax({
     url: queryUrl,
     method: "GET"
-  }).then(function(response){
+}).then(function(response){
       var fard = (response.main.temp - 273.15) * 1.80 + 32;
-      $("#currentTemp").text("Current Temp: " + "");
+    $("#currentTemp").text("Current Temp: " + "");
     $("#currentTemp").append(fard.toFixed(0));
     var humid = response.main.humidity;
     $("#humid").text("Humidity: " + "");
@@ -64,11 +58,11 @@ $.ajax({
     var date = moment().format("MMM Do YYYY");
     $("#todayDate").text("Date: " + "");
     $("#todayDate").append(date);
-     lat = response.coord.lat;
-     lon = response.coord.lon;
-     cityID = response.id;
+    lat = response.coord.lat;
+    lon = response.coord.lon;
+    cityID = response.id;
     uvUrl = "http://api.openweathermap.org/data/2.5/uvi?appid="+apiKey +"&lat=" + lat+ "&lon="+lon;
-     }).then(function() {
+    }).then(function() {
 $.ajax({
     url:uvUrl,
     method:"GET"
@@ -81,7 +75,6 @@ $.ajax({
             url: thirdUrl,
             method: "GET"
         }).then(function(response){
-            
             $("#textOne").html("Date: " + moment().add(1, 'd').format("MMM Do YYYY") + "<br/>  Temp at noon: " + response.list['5'].main.temp + "<br/> Humidity at noon: "+ response.list['5'].main.humidity);
             if (response.list['5'].weather['0'].main == "Clouds") {
                 $("#imageOne").attr("src", "https://3yecy51kdipx3blyi37oute1-wpengine.netdna-ssl.com/wp-content/uploads/2019/01/bg-clouds.jpg")
@@ -138,20 +131,16 @@ $.ajax({
             }
         })
     })
-
 })
-
 }
-
 
 //an event listener on the newbuttons area that triggers a new weather search
 $("#pastLocations").on("click", function() {
+    $("#cityName").text("City Name: " + "")
+    $("#cityName").append(event.target.innerText);
     queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + event.target.innerText + "&appid="+apiKey;
     send();
 })
-
-
-
 
 //a for loop that loops through local storage cells on page load and appends buttons form those searches. Must also update pastSearches array.
 var launch = function() {
@@ -164,13 +153,12 @@ var launch = function() {
     for (var j = 0; j<pastSearches.length; j++){
         var pastBtn = $("<button>");
         pastBtn.text(pastSearches[j]);
+        pastBtn.attr("class", "btn-success");
         $("#pastLocations").append(pastBtn);
         manualIterator2 = pastSearches.length;
     }
 }
 
-
-localStorage.clear();
-
 //calling the launch function on page load to display past searches
 launch()
+//localStorage.clear();
