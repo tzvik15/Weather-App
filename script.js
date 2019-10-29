@@ -61,7 +61,7 @@ $.ajax({
     lat = response.coord.lat;
     lon = response.coord.lon;
     cityID = response.id;
-    uvUrl = "http://api.openweathermap.org/data/2.5/uvi?appid="+apiKey +"&lat=" + lat+ "&lon="+lon;
+    uvUrl = "https://api.openweathermap.org/data/2.5/uvi?appid="+apiKey +"&lat=" + lat+ "&lon="+lon;
     }).then(function() {
 $.ajax({
     url:uvUrl,
@@ -70,7 +70,7 @@ $.ajax({
     var actualUv = response.value;
     $("#uv").text("UV Index: " + "");
     $("#uv").append(actualUv);
-    var thirdUrl = "http://api.openweathermap.org/data/2.5/forecast?appid=" +apiKey +"&id=" + cityID +"&units=imperial";
+    var thirdUrl = "https://api.openweathermap.org/data/2.5/forecast?appid=" +apiKey +"&id=" + cityID +"&units=imperial";
         $.ajax({
             url: thirdUrl,
             method: "GET"
